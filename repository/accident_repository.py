@@ -8,3 +8,7 @@ class AccidentRepository(BaseRepository):
     def find_by_query(self, query):
         res = (self.collection.find(query, {"_id": 1}))
         return list(res)
+
+    def grop_by_query(self, query):
+        res = self.collection.aggregate(query)
+        return list(res)

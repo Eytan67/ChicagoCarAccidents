@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
-
-from service.search_accidents import get_accidents_by_beat_and_date_range
+from service.search_accidents import get_accidents_by_beat_and_date_range, order_accident_by_prim
 from datetime import timedelta, datetime
 
 query_bp = Blueprint('query', __name__)
@@ -31,8 +30,9 @@ def get_accidents_by_beat(beat):
         res = get_accidents_by_beat_and_date_range(beat)
         return jsonify({'beat': beat, 'res': res})
 
-@query_bp.route('cause', methods=['GET'])
-def get_accidents_by_cause():
+@query_bp.route('cause/<beat>', methods=['GET'])
+def get_accidents_by_cause(beat):
+    order_accident_by_prim(beat)
     return jsonify({"cause" : 1})
 
 @query_bp.route('statistic', methods=['GET'])

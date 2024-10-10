@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, jsonify, current_app
+from flask import jsonify, current_app
 from repository.accident_repository import AccidentRepository
 from repository.beats_repository import BeatsRepository
 from repository.csv_repository import read_csv

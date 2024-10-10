@@ -16,4 +16,3 @@ class BeatsRepository(BaseRepository):
     def get_by_beat(self, beat):
         res = self.collection.find_one({"beat": beat})
         return res['accidents']
-

@@ -1,6 +1,4 @@
-from flask import Blueprint, jsonify, current_app
-
-from repository.database import Database
+from flask import Blueprint
 from service.init_database import init_database
 
 initdb_bp = Blueprint('init', __name__)

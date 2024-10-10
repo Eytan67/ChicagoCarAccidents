@@ -32,8 +32,34 @@ def get_accidents_by_beat_and_date_range(beat, start_date = None, end_date = Non
         "_id": {"$in": [ObjectId(accident_id) for accident_id in accident_ids]},
         "CRASH_DATE": date_filter
     }
-    print("Query:", query)
     accidents = accident_repository.find_by_query(query)
     db.close_connection()
 
     return len(accidents)
+
+def order_accident_by_prim(beat):
+    db = Database(app=current_app)
+    beats_collection = db.get_collection('beats')
+    beats_repository = BeatsRepository(beats_collection)
+
+    accident_ids = beats_repository.get_by_beat(beat)
+
+    query = [
+        {
+            "$match": {
+                "$in": [ObjectId(accident_id) for accident_id in accident_ids]
+            }
+        },
+        {
+            "$group": {
+                "_id": "$PRIM_CONTRIBUTORY_CAUSE",
+                "count": {"$sum": 1}
+            }
+        }
+    ]
+
+    accident_collection = db.get_collection('accidents')
+    accident_repository = AccidentRepository(accident_collection)
+
+    accidents = accident_repository.grop_by_query(query)
+    print("accidents:", accidents)
