@@ -8,5 +8,4 @@ initdb_bp = Blueprint('init', __name__)
 
 @initdb_bp.route('/', methods=['POST'])
 def initialize():
-    db = Database(app=current_app)
-    return init_database(db), 200
+    return init_database(), 200
