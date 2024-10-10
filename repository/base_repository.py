@@ -4,8 +4,14 @@ class BaseRepository:
     def __init__(self, collection):
         self.collection = collection
 
+    def drop_collection(self):
+        self.collection.drop()
+
     def add(self, item):
         return self.collection.insert_one(item).inserted_id
+
+    def add_many(self, items):
+        return self.collection.insert_many(items)
 
     def get_all(self):
         return self.collection.find()
